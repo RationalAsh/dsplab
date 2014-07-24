@@ -62,17 +62,17 @@ output4 = zeros(1, L+M-1);
 i = 1;
 k = M - 1;
 X = [X, zeros(1, M-1)];
-while(i <= L)
+while(i <= L+M-1)
     if(i <= 100)
        output(i)  = dot(Y1(101-i:100),X(1:i));
        output2(i) = dot(Y2(101-i:100),X(1:i));
        output3(i) = dot(Y3(101-i:100),X(1:i));
        output4(i) = dot(Y4(101-i:100),X(1:i));
     else
-       output(i)  = dot(Y1, X(i:i+k));
-       output2(i) = dot(Y2, X(i:i+k));
-       output3(i) = dot(Y3, X(i:i+k));
-       output4(i) = dot(Y4, X(i:i+k));
+       output(i)  = dot(Y1, X(i-100:i-100+k));
+       output2(i) = dot(Y2, X(i-100:i-100+k));
+       output3(i) = dot(Y3, X(i-100:i-100+k));
+       output4(i) = dot(Y4, X(i-100:i-100+k));
     end
     i = i + 1;
 end
