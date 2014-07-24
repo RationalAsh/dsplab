@@ -1,3 +1,5 @@
+% TODO: Write my own code for convolution instead of using the inbuilt one.
+
 Fs = 10000;
 Ts = 1/Fs;
 fi = [1000 2500 3000 4000 5000];
@@ -36,9 +38,16 @@ figure(1);
 L = length(h1);
 M = length(S);
 y1 = zeros(1, L+M-1);
-%for(i=1:L)
-%    if(
-y1 = conv(S, h1);
+ctemp = fliplr(h1);
+%Not working for some reason. Find out why.
+for(i=1:L)
+    if(i <= L+M-1)
+        y1(i) = dot(ctemp(L-i+1:L),S(1:i));
+    else
+        y1(i) = dot(ctemp, S(i-L:i-L+M-1));
+    end
+end
+%y1 = conv(S, h1);
 %y1 = out(1:L+M-1);
 subplot(4,1,2), plot(Ts*[1:length(y1)], y1);
 xlabel('time(s)'); ylabel('Y1'); title('S convolved with h1');
