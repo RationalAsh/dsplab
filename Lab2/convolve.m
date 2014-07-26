@@ -1,3 +1,6 @@
+%This is a function that manually implements convolution using dft. The
+%algorithm is clearly detailed step by step in the comments that follow.
+
 function output = convolve(x,h)
 % Get lengths of both sequences
 L = length(x);
