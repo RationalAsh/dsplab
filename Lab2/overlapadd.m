@@ -5,6 +5,31 @@
 %sequences obtained from this is then shifted, overlapped at the
 %appropriate points and then added.
 
-function output = overlapadd(x, h)
 
+
+function output = overlapadd(x, h, block_size)
+c_result = [];
+n_blocks = length(x)/block_size;
+flg = 0;
+if(mod(length(x), block_size) ~= 0)
+    disp('The length of the input sequence must be an integer multiple of the block_size. Please try again');
+    output = [];
+    flg = 1;
+end
+
+blocks = zeros(n_blocks, block_size);
+out = zeros(n_blocks, length(x)+length(h)-1);
+
+if(flg ~= 1)
+    %Split the input sequence into blocks of manageable length
+    blocks = reshape(x, n_blocks, block_size)';
+    %Convolve each block with the filter
+    for i = 1:n_blocks
+        out(i, :) = convolve(blocks(i, :), h);
+    end
+    %Overlap each sequence at the right spot.
+    %Add all the sequences to get the answer.
+    %output = convolve(x,h);
+end
+output = out;
 end
