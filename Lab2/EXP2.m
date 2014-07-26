@@ -3,9 +3,9 @@
 Fs = 10000;
 Ts = 1/Fs;
 fi = [1000 2500 3000 4000 5000];
-S  = zeros(1,200);
+S = zeros(1,200);
 % 1. Generate the signal S
-for n  = 1:500
+for n = 1:500
     S(n) = sum(sin(2*pi*fi*n*Ts));
 end
 figure(1);
@@ -39,27 +39,27 @@ L = length(h1);
 M = length(S);
 y1 = zeros(1, L+M-1);
 ctemp = fliplr(h1);
-%Not working for some reason. Find out why.
-for(i=1:L)
-    if(i <= L+M-1)
-        y1(i) = dot(ctemp(L-i+1:L),S(1:i));
-    else
-        y1(i) = dot(ctemp, S(i-L:i-L+M-1));
-    end
-end
-%y1 = conv(S, h1);
+% %Not working for some reason. Find out why.
+% for(i=1:L)
+%     if(i <= L+M-1)
+%         y1(i) = dot(ctemp(L-i+1:L),S(1:i));
+%     else
+%         y1(i) = dot(ctemp, S(i-L:i-L+M-1));
+%     end
+% end
+y1 = convolve(S, h1);
 %y1 = out(1:L+M-1);
 subplot(4,1,2), plot(Ts*[1:length(y1)], y1);
 xlabel('time(s)'); ylabel('Y1'); title('S convolved with h1');
 
-%I have to replace every other sample with a zero. This 
-%is a little trick to do just that. I'll explain how it 
+%I have to replace every other sample with a zero. This
+%is a little trick to do just that. I'll explain how it
 %works so that I can understand it later.
 %First I create an array of the increasing numbers from
 %one to the length of the array. Then I get the remainder
 %of each number when divided by two. This gives me an array
 %of alternating ones and zeros that are the same size as the
-%array. Then I multiply this array with the sequence element 
+%array. Then I multiply this array with the sequence element
 %by element so that every other sameple is replaced by a zero.
 
 % 3. Replace alternative samples of y1 with zeros to obtain y2
@@ -67,7 +67,7 @@ y2 = y1.*mod([1:length(y1)], 2);
 %subplot(5,1,3), plot(Ts*[1:length(y2)], y2);
 
 % 4. Convolve the signal with h2 to get y3
-y3 = conv(S, h2);
+y3 = convolve(S, h2);
 subplot(4,1,3), plot(Ts*[1:length(y3)], y3);
 xlabel('time(s)'); ylabel('y3'); title('S convolved with h2');
 
@@ -76,11 +76,10 @@ xlabel('time(s)'); ylabel('y3'); title('S convolved with h2');
 y4 = y3.*mod([1:length(y3)], 2);
 
 % 6. Convolve the signal y2 with h3 to get out1
-out1 = conv(y2, h3);
+out1 = convolve(y2, h3);
 
 % 7. Convolve y4 with h4 to get out2
-out2 = conv(y4, h4);
+out2 = convolve(y4, h4);
 
 subplot(4,1,4), plot([1:length(out1+out2)],out1 + out2)
 xlabel('time(s)'); ylabel('out1+out2'); title('Sum of out1 and out2');
-
