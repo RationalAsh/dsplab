@@ -18,6 +18,7 @@ if(mod(length(x), block_size) ~= 0)
 end
 
 blocks = zeros(n_blocks, block_size);
+%convolved= zeros(n_blocks, block_size + length(h) - 1);
 out = zeros(n_blocks, length(x)+length(h)-1);
 
 if(flg ~= 1)
@@ -25,11 +26,16 @@ if(flg ~= 1)
     blocks = reshape(x, n_blocks, block_size)';
     %Convolve each block with the filter
     for i = 1:n_blocks
-        out(i, :) = convolve(blocks(i, :), h);
+        out(i, 1:block_size+length(h)-1) = convolve(blocks(i, :), h);
     end
     %Overlap each sequence at the right spot.
+    for i=1:n_blocks
+        out(i, :) = circshift(out(i, :), [0 (i-1)*block_size]);
+    end
     %Add all the sequences to get the answer.
     %output = convolve(x,h);
 end
-output = out;
+output = cumsum(out);
+output = output(n_blocks, :);
+%output = output;
 end
