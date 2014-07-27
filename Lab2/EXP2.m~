@@ -79,13 +79,8 @@ out2 = overlapadd(y4, h4, 7);
 subplot(4,1,4), plot([1:length(out1+out2)],out1 + out2)
 xlabel('time(s)'); ylabel('out1+out2'); title('Sum of out1 and out2');
 
-%Plotting the spectra of the signals
-figure(3);
+%Plotting the spectra of the signals 
 subplot(4,1,1), plot([-Fs/2:Fs/length(S):Fs/2-Fs/length(S)],abs(fftshift(fft(S))));
-xlabel('Frequency'); ylabel('S'); title('Spectrum of Original signal');
-subplot(4,1,2), plot([-Fs/2:Fs/length(y1):Fs/2-Fs/length(y1)],abs(fftshift(fft(y1))));
-xlabel('Frequency'); ylabel('y1'); title('Spectrum of y1');
-subplot(4,1,3), plot([-Fs/2:Fs/length(y3):Fs/2-Fs/length(y3)],abs(fftshift(fft(y3))));
-xlabel('Frequency'); ylabel('y3'); title('Spectrum of y3');
-subplot(4,1,4), plot([-Fs/2:Fs/length(out1+out2):Fs/2-Fs/length(out1+out2)],abs(fftshift(fft(out1+out2))));
-xlabel('Frequency'); ylabel('out1+out2'); title('Spectrum of out1+out2');
+subplplot([-Fs/2:Fs/length(y1):Fs/2-Fs/length(y1)],abs(fftshift(fft(y1))));
+plot([-Fs/2:Fs/length(y3):Fs/2-Fs/length(y3)],abs(fftshift(fft(y3))));
+plot([-Fs/2:Fs/length(out1+out2):Fs/2-Fs/length(out1+out2)],abs(fftshift(fft(out1+out2))));
