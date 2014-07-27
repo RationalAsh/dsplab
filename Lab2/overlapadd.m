@@ -5,7 +5,7 @@
 %sequences obtained from this is then shifted, overlapped at the
 %appropriate points and then added.
 
-
+%The overlap and add algorithm now works!!! :D
 
 function output = overlapadd(x, h, block_size)
 c_result = [];
