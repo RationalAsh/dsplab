@@ -23,7 +23,7 @@ out = zeros(n_blocks, length(x)+length(h)-1);
 
 if(flg ~= 1)
     %Split the input sequence into blocks of manageable length
-    blocks = reshape(x, n_blocks, block_size)';
+    blocks = reshape(x, block_size, n_blocks)';
     %Convolve each block with the filter
     for i = 1:n_blocks
         out(i, 1:block_size+length(h)-1) = convolve(blocks(i, :), h);

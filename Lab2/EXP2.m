@@ -39,16 +39,8 @@ L = length(h1);
 M = length(S);
 y1 = zeros(1, L+M-1);
 ctemp = fliplr(h1);
-% %Not working for some reason. Find out why.
-% for(i=1:L)
-%     if(i <= L+M-1)
-%         y1(i) = dot(ctemp(L-i+1:L),S(1:i));
-%     else
-%         y1(i) = dot(ctemp, S(i-L:i-L+M-1));
-%     end
-% end
-y1 = convolve(S, h1);
-%y1 = out(1:L+M-1);
+%y1 = convolve(S, h1);
+y1 = overlapadd(S, h1, 50);
 subplot(4,1,2), plot(Ts*[1:length(y1)], y1);
 xlabel('time(s)'); ylabel('Y1'); title('S convolved with h1');
 
@@ -67,7 +59,8 @@ y2 = y1.*mod([1:length(y1)], 2);
 %subplot(5,1,3), plot(Ts*[1:length(y2)], y2);
 
 % 4. Convolve the signal with h2 to get y3
-y3 = convolve(S, h2);
+%y3 = convolve(S, h2);
+y3 = overlapadd(S, h2, 50);
 subplot(4,1,3), plot(Ts*[1:length(y3)], y3);
 xlabel('time(s)'); ylabel('y3'); title('S convolved with h2');
 
@@ -76,10 +69,12 @@ xlabel('time(s)'); ylabel('y3'); title('S convolved with h2');
 y4 = y3.*mod([1:length(y3)], 2);
 
 % 6. Convolve the signal y2 with h3 to get out1
-out1 = convolve(y2, h3);
+%out1 = convolve(y2, h3);
+out1 = overlapadd(y2, h3, 7);
 
 % 7. Convolve y4 with h4 to get out2
-out2 = convolve(y4, h4);
+%out2 = convolve(y4, h4);
+out2 = overlapadd(y4, h4, 7);
 
 subplot(4,1,4), plot([1:length(out1+out2)],out1 + out2)
 xlabel('time(s)'); ylabel('out1+out2'); title('Sum of out1 and out2');
