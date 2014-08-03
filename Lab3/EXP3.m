@@ -12,15 +12,13 @@ for i=1:3
     x = x + A(i)*sin(2*pi*f(i)*n*Ts);
 end
 
-%Plot the signal
-plot(Ts*[1:length(x)], x);
-
 %Designing a low pass filter to filter out noise
 Fc = 1000;
 M = 71; %Filter length
-n = 0:M-1;
+n = -(M-1)/2:(M-1)/2;
 %using rectuangular window
-h = sinc((2*Fc/Fs)*(n - (M-1)/2));
+h = (2*Fc/Fs)*sinc((2*Fc/Fs)*(n));
+plot(h);
 fvtool(h);
 
 %using bartlett window
@@ -33,7 +31,7 @@ fvtool(h2);
 h3 = h.*hamming(M)';
 fvtool(h3);
 %using the Blackmann window
-h4 = h.*blackmann(M)';
+h4 = h.*blackman(M)';
 fvtool(h4);
 %plot(bartlett(M));
 
@@ -42,12 +40,12 @@ y1 = convolve(x,h1);
 y2 = convolve(x,h2);
 y3 = convolve(x,h3);
 y4 = convolve(x,h4);
-
-subplot(5,1,1), plot(Ts*[1:length(y)], y);
-subplot(5,1,2), plot(Ts*[1:length(y1)], y1);
-subplot(5,1,3), plot(Ts*[1:length(y2)], y2);
-subplot(5,1,4), plot(Ts*[1:length(y3)], y3);
-subplot(5,1,5), plot(Ts*[1:length(y4)], y4);
+subplot(6,1,1), plot(Ts*[1:length(x)], x);
+subplot(6,1,2), plot(Ts*[1:length(y)], y);
+subplot(6,1,3), plot(Ts*[1:length(y1)], y1);
+subplot(6,1,4), plot(Ts*[1:length(y2)], y2);
+subplot(6,1,5), plot(Ts*[1:length(y3)], y3);
+subplot(6,1,6), plot(Ts*[1:length(y4)], y4);
 
 % x1 = sin(2*pi*f1*n*Ts);
 % x2 = sin(2*pi*f2*n*Ts);
