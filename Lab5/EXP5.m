@@ -10,9 +10,9 @@ for i=1:(length(speech) - segsize)
     x = speech(i:i+segsize -1);
     %Multpiply by the window
     win = hamming(segsize)';
-    x.*win;
+    xw = x.*win;
     %compute N point DFT
-    X = fft(x);
+    X = myfft(xw);
     sq = (abs(X)).^2;
     spect = sq(1:segsize/2);
     
