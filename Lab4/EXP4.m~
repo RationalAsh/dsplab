@@ -61,12 +61,18 @@ title('Filtered using impulse invariance');
 
 %Part 2
 s = tf('s');
-fvtool(tfdata((s - (-0.5-0.5i))/(s), 'v'));
+[b1,a1] = tfdata((s - (-0.5-0.5i))/(s), 'v');
+fvtool(b1,a1)
 
-fvtool(tfdata((s - (-1+1i))/(s), 'v'));
+H2 = (s - (-1+1i))/(s);
+[b2,a2] = tfdata(H2, 'v');
+fvtool(b2,a2);
 
-fvtool(tfdata((s - (-1-1i))/(s), 'v'));
+H3 = (s - (-1-1i))/(s);
+[b3,a3] = tfdata(H3, 'v');
+fvtool(b3,a3);
 
-fvtool(tfdata((s - (0.5+0.5i))/(s), 'v'));
-
+H4 = (s - (0.5+0.5i))/(s);
+[b4,a4] = tfdata(H4, 'v');
+fvtool(b4,a4);
 
