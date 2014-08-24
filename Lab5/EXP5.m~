@@ -1,0 +1,15 @@
+speech = speechdata;
+segsize = 256;
+
+%plotting the spectrum
+for i=1:(length(speech) - segsize)
+    %Get the next overlapping 256 samples
+    x = speech(i:i+segsize -1);
+    %Multpiply by the window
+    win = hamming(segsize)';
+    x.*win;
+    %compute N point DFT
+    X = fft(x);
+    sq = (abs(X)).^2;
+    spect = sq(1:segsize/
+end
