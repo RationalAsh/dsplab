@@ -66,7 +66,7 @@ y2 = conv(x,h2);
 y3 = conv(x,h3);
 y4 = conv(x,h4);
 subplot(6,1,1), plot(Ts*[1:length(x)], x);
-title(
+%title(
 subplot(6,1,2), plot(Ts*[1:length(y)], y);
 subplot(6,1,3), plot(Ts*[1:length(y1)], y1);
 subplot(6,1,4), plot(Ts*[1:length(y2)], y2);
